@@ -1,0 +1,7 @@
+integer: 4
+key_dict:
+  key1: 20€
+  key2: 50€
+key_list:
+- value1
+- value2
