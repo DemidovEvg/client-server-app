@@ -5,7 +5,7 @@ def write_order_to_json(item, quantity, price, buyer, date):
     try:
         with open('orders.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
-    except FileNotFoundError or json.decoder.JSONDecodeError:
+    except FileNotFoundError:
         data = {'orders': []}
 
     orders_list = data['orders']
