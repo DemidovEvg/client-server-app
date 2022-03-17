@@ -1,22 +1,23 @@
 import sys
 from socket import socket, AF_INET, SOCK_STREAM
 from common.utils import get_message, send_message
-from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT
+from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, TIME, \
+    USER, ACCOUNT_NAME, PRESENCE, RESPONSE, ERROR
 import json
 
 
 def process_client_message(message):
-    action = message.get('action')
-    time = message.get('time')
-    user = message.get('user')
-    account_name = user.get('account_name') if user else None
+    action = message.get(ACTION)
+    time = message.get(TIME)
+    user = message.get(USER)
+    account_name = user.get(ACCOUNT_NAME) if user else None
 
-    if action == 'presence' and time and user and account_name == 'Guest':
-        return {'response': 200}
+    if action == PRESENCE and time and user and account_name == 'Guest':
+        return {RESPONSE: 200}
 
     return {
-        'response': 400,
-        'error': 'Bad Request'
+        RESPONSE: 400,
+        ERROR: 'Bad Request'
     }
 
 

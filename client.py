@@ -1,6 +1,7 @@
 import sys
 from socket import socket, AF_INET, SOCK_STREAM
-from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT
+from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, TIME, USER, \
+    ACCOUNT_NAME, RESPONSE, ERROR, PRESENCE, ACTION
 from common.utils import send_message, get_message
 import time
 import json
@@ -8,20 +9,20 @@ import json
 
 def create_presence(account_name='Guest'):
     presence = {
-        'action': 'presence',
-        'time': time.time(),
-        'user': {
-            'account_name': account_name
+        ACTION: PRESENCE,
+        TIME: time.time(),
+        USER: {
+            ACCOUNT_NAME: account_name
         }
     }
     return presence
 
 
 def process_answer(message):
-    if 'response' in message:
-        if message['response'] == 200:
+    if RESPONSE in message:
+        if message[RESPONSE] == 200:
             return '200 : OK'
-        return f'400 : {message["error"]}'
+        return f'400 : {message[ERROR]}'
     raise ValueError
 
 
