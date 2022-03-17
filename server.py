@@ -45,5 +45,5 @@ if __name__ == '__main__':
             send_message(client, response)
         except (ValueError, json.JSONDecodeError):
             print('Принято некорретное сообщение от клиента.')
-
-        client.close()
+        finally:
+            client.close()

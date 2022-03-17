@@ -46,5 +46,5 @@ if __name__ == '__main__':
         print(answer)
     except (ValueError, json.JSONDecodeError):
         print('Не удалось декодировать сообщение сервера.')
-
-    transport.close()
+    finally:
+        transport.close()
