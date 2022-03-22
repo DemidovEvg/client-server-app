@@ -4,9 +4,15 @@ from common.utils import get_message, send_message
 from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, TIME, \
     USER, ACCOUNT_NAME, PRESENCE, RESPONSE, ERROR
 import json
+import logging
+import logs.server_log_config
+
+SERVER_LOGGER = logging.getLogger('server')
 
 
 def process_client_message(message):
+    SERVER_LOGGER.debug(f'Разбор сообщения от клиента: {message}')
+
     action = message.get(ACTION)
     time = message.get(TIME)
     user = message.get(USER)
@@ -35,15 +41,24 @@ if __name__ == '__main__':
     transport.bind((listen_address, listen_port))
     transport.listen()
 
+    SERVER_LOGGER.info(
+        f"Сервер запущен. Подключения принимаются "
+        f"{f'с адреса: {listen_address}' if listen_address else 'со всех адресов'}. "
+        f"Порт для подключений: {listen_port}"
+    )
+
     while True:
         client, address = transport.accept()
+        SERVER_LOGGER.info(f'Установлено соедение с клиентом {address}')
 
         try:
             message_from_cient = get_message(client)
-            print(message_from_cient)
+            SERVER_LOGGER.debug(f'Сообщение от клиента: {message_from_cient}')
             response = process_client_message(message_from_cient)
+            SERVER_LOGGER.debug(f'Ответ клиенту: {response}')
             send_message(client, response)
         except (ValueError, json.JSONDecodeError):
-            print('Принято некорретное сообщение от клиента.')
+            SERVER_LOGGER.error('Принято некорретное сообщение от клиента.')
         finally:
             client.close()
+            SERVER_LOGGER.info(f'Соединение закрыто')
