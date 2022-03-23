@@ -32,7 +32,7 @@ def process_answer(message):
     raise ValueError
 
 
-if __name__ == '__main__':
+def main():
     server_address = DEFAULT_IP_ADDRESS
     server_port = DEFAULT_PORT
 
@@ -59,3 +59,7 @@ if __name__ == '__main__':
     finally:
         transport.close()
         CLIENT_LOGGER.info(f'Соединение закрыто.')
+
+
+if __name__ == '__main__':
+    main()

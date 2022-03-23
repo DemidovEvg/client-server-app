@@ -27,7 +27,7 @@ def process_client_message(message):
     }
 
 
-if __name__ == '__main__':
+def main():
     listen_address = DEFAULT_IP_ADDRESS
     listen_port = DEFAULT_PORT
 
@@ -62,3 +62,7 @@ if __name__ == '__main__':
         finally:
             client.close()
             SERVER_LOGGER.info(f'Соединение закрыто')
+
+
+if __name__ == '__main__':
+    main()
