@@ -6,10 +6,12 @@ from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, TIME, \
 import json
 import logging
 import logs.server_log_config
+from logs.decorators import log
 
 SERVER_LOGGER = logging.getLogger('server')
 
 
+@log
 def process_client_message(message):
     SERVER_LOGGER.debug(f'Разбор сообщения от клиента: {message}')
 
@@ -27,6 +29,7 @@ def process_client_message(message):
     }
 
 
+@log
 def main():
     listen_address = DEFAULT_IP_ADDRESS
     listen_port = DEFAULT_PORT

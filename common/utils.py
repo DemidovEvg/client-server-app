@@ -1,7 +1,9 @@
 from common.variables import ENCODING, MAX_PACKAGE_LENGTH
 import json
+from logs.decorators import log
 
 
+@log
 def get_message(client):
     encoded_response = client.recv(MAX_PACKAGE_LENGTH)
 
@@ -15,6 +17,7 @@ def get_message(client):
     raise ValueError
 
 
+@log
 def send_message(sock, message):
     if not isinstance(message, dict):
         raise TypeError
