@@ -7,10 +7,12 @@ import time
 import json
 import logging
 import logs.client_log_config
+from logs.decorators import log
 
 CLIENT_LOGGER = logging.getLogger('client')
 
 
+@log
 def create_presence(account_name='Guest'):
     presence = {
         ACTION: PRESENCE,
@@ -23,6 +25,7 @@ def create_presence(account_name='Guest'):
     return presence
 
 
+@log
 def process_answer(message):
     CLIENT_LOGGER.debug(f'Разбор сообщения от сервера: {message}')
     if RESPONSE in message:
@@ -32,6 +35,7 @@ def process_answer(message):
     raise ValueError
 
 
+@log
 def main():
     server_address = DEFAULT_IP_ADDRESS
     server_port = DEFAULT_PORT
